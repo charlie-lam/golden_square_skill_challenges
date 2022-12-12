@@ -1,0 +1,53 @@
+Diary entry Class Design Recipe
+
+1. Describe the Problem
+Put or write the user story here. Add any clarifying notes you might have.
+
+    As a user
+    So that I can add and read a diary entry
+    I want to be able to add a title and contents of a diary entry.
+    I want to be able to get the entry title shown to me.
+    I want the contents on their own shown to me.
+    I want the number of words in the entry to be shown.
+    I want to know how long it'll take to read based on my reading rate.
+    I want a chunk of the text shown to that I can read in a given amount of time based on my reading rate.
+
+2. Design the Class Signature
+Include the name of the class, its initializing parameters, class methods with their parameters and what each should return, and side effects.
+
+    DiaryEntry Class
+    .initialize(title, contents) => State should be set as {title:title, contents:contents, remaining: contents}
+    .title =>  title
+    .contents => contents
+    .count_words => number of words
+    .reading_time(wpm) => time in minutes
+    .reading_chunk(wpm, time) => content chunk that can be read in the time
+
+3. Create Examples as Tests
+Make a list of examples of what the class will take and return after method calls.
+
+    entry = DiaryEntry.new("Dec 12th", "To myopic eyes the shower unit head resembled a cobra, poised to strike. Mistakenly he hit the cold tap—in January. The shower spat icy venom. Shrieking, he leapt with mongoose agility. One hand snaked towards the tap and turned rapidly. In a second it was over. He was safe.")
+    entry.title => "Dec 12th"
+    
+    entry = DiaryEntry.new("Dec 12th", "To myopic eyes the shower unit head resembled a cobra, poised to strike. Mistakenly he hit the cold tap—in January. The shower spat icy venom. Shrieking, he leapt with mongoose agility. One hand snaked towards the tap and turned rapidly. In a second it was over. He was safe.")
+    entry.contents => "To myopic eyes the shower unit head resembled a cobra, poised to strike. Mistakenly he hit the cold tap—in January. The shower spat icy venom. Shrieking, he leapt with mongoose agility. One hand snaked towards the tap and turned rapidly. In just a second it was over. He was safe."
+    
+    entry = DiaryEntry.new("Dec 12th", "To his myopic eyes the shower unit head resembled a cobra, poised to strike. Mistakenly he hit the cold tap—in January. The shower spat icy venom. Shrieking, he leapt with mongoose agility. One hand snaked towards the tap and turned rapidly. In a second it was over. He was safe.")
+    entry.count_words => 50
+
+    entry = DiaryEntry.new("Dec 12th", "To myopic eyes the shower unit head resembled a cobra, poised to strike. Mistakenly he hit the cold tap—in January. The shower spat icy venom. Shrieking, he leapt with mongoose agility. One hand snaked towards the tap and turned rapidly. In a second it was over. He was safe.")
+    entry.reading_time(50) => 1
+
+    entry = DiaryEntry.new("Dec 12th", "To myopic eyes the shower unit head resembled a cobra, poised to strike. Mistakenly he hit the cold tap—in January. The shower spat icy venom. Shrieking, he leapt with mongoose agility. One hand snaked towards the tap and turned rapidly. In a second it was over. He was safe.")
+    entry.reading_time(0) => Error "Please enter a reading rate above 0"
+
+    entry = DiaryEntry.new("Dec 12th", "To myopic eyes the shower unit head resembled a cobra, poised to strike. Mistakenly he hit the cold tap—in January. The shower spat icy venom. Shrieking, he leapt with mongoose agility. One hand snaked towards the tap and turned rapidly. In a second it was over. He was safe.")
+    entry.reading_chunk(25, 1) => "To myopic eyes the shower unit head resembled a cobra, poised to strike. Mistakenly he hit the cold tap—in January. The shower spat icy venom."
+
+    entry = DiaryEntry.new("Dec 12th", "To myopic eyes the shower unit head resembled a cobra, poised to strike. Mistakenly he hit the cold tap—in January. The shower spat icy venom. Shrieking, he leapt with mongoose agility. One hand snaked towards the tap and turned rapidly. In a second it was over. He was safe.")
+    entry.reading_chunk(25,1 ) => " Shrieking, he leapt with mongoose agility. One hand snaked towards the tap and turned rapidly. In just a second it was over. He was safe."
+
+
+    
+4. Implement the Behaviour
+After each test you write, follow the test-driving process of red, green, refactor to implement the behaviour.
