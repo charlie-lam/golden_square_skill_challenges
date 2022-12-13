@@ -16,7 +16,7 @@ class LetterCounter
         counter[char] = counter[char] + 1
         if counter[char] > most_common_count
           most_common = char
-          #Suspisious
+          #Suspicious
           most_common_count = counter[char]
         end
       end
